@@ -1,0 +1,18 @@
+﻿@model BirthdayApp.Models.InvitationModel
+@{
+    ViewBag.Title = "Thanks";
+}
+
+<h1>Thanks @Model.Name</h1>
+
+<div class="lead">
+    @if (Model.AttendanceStatus == true)
+    {
+        @:Glad to see you around :)
+        @Html.Action("Attendants","Home")
+    }
+    else
+    {
+        @:So bad not to see you here :(
+    }
+</div>

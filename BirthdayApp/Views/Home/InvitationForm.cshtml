@@ -1,0 +1,34 @@
+﻿@model BirthdayApp.Models.InvitationModel
+@{
+    ViewBag.Title = "InvitationForm";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading"><h4>You are invited as well!</h4></div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                <label>Name: </label>
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>E-Mail: </label>
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>Will you join?:</label>
+                @Html.DropDownListFor(x=>x.AttendanceStatus, new[] {
+               new SelectListItem() {Text = "Yes!",Value=bool.TrueString},
+               new SelectListItem() {Text = "Unfortunately no...",Value=bool.FalseString}},"Will you join?", new { @class="form-control"})
+            </div>
+
+            <div class="text-center">
+                <input class="btn btn-success" type="submit" value="Confirm"/>
+            </div>
+
+        }
+    </div>
+</div>
