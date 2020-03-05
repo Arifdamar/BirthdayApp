@@ -14,7 +14,10 @@
         <hr />
 
         <div id="result" class="alert alert-success" style="display:none;">
-            Your informations are recorded. Redirecting...
+            <h3>Your informations are recorded. Redirecting...</h3>
+            <h4>
+                <span id="Attendants"></span>
+            </h4>
         </div>
 
         <div class="row">
@@ -56,6 +59,19 @@
     </div>
 
     <script>
+        function GetAttendants()
+        {
+            var html = [];
+            $.getJSON("http://localhost:12486/api/Invitation/GetAttendants", function (data) {
+
+                $.each(data, function (key, value) {
+                    html.push("<label class='badge badge-info'>" + value.Name + "</label> ");
+                });
+
+                $("#Attendants").empty().append(html);
+            });
+        }
+
         $("#InvitationForm").submit(function (event) {
             event.preventDefault();
             $.ajax({
@@ -73,6 +89,10 @@
                     $("#ajax-loader").hide();
                 },
                 success: function () {
+                    if ($("#AttendanceStatus").val() == "true") {
+                        GetAttendants();
+                    }
+
                     $("#result").show();
                 }
             });
