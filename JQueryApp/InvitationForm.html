@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="Scripts/jquery-3.0.0.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+
+        <img id="ajax-loader" src="ajax-loading.gif" style="display:none;width:100px;" />
+        <hr />
+
+        <div id="result" class="alert alert-success" style="display:none;">
+            Your informations are recorded. Redirecting...
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h4>You are invited as well!</h4></div>
+                    <div class="panel-body">
+
+                        <form id="InvitationForm">
+
+                            <div class="form-group">
+                                <label>Name: </label>
+                                <input type="text" id="Name" name="Name" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>E-Mail: </label>
+                                <input type="text" id="Email" name="Email" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Will you join?:</label>
+                                <select class="form-control" id="AttendanceStatus" name="AttendanceStatus">
+                                    <option>Will you join?</option>
+                                    <option value="true">Yes!</option>
+                                    <option value="false">Unfortunately no...</option>
+                                </select>
+                            </div>
+
+                            <div class="text-center">
+                                <input class="btn btn-success" type="submit" value="Confirm" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#InvitationForm").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: "http://localhost:12486/api/Invitation/PostAdd",
+                data: {
+                    Name: $("#Name").val(),
+                    Email: $("#Email").val(),
+                    AttendanceStatus: $("#AttendanceStatus").val(),
+                },
+                type: "Post",
+                beforeSend: function () {
+                    $("#ajax-loader").show();
+                },
+                complete: function () {
+                    $("#ajax-loader").hide();
+                },
+                success: function () {
+                    $("#result").show();
+                }
+            });
+
+        })
+    </script>
+</body>
+</html>
